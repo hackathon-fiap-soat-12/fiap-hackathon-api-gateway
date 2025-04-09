@@ -1,5 +1,5 @@
 {
-    "openapi": "3.1.0",
+    "openapi": "3.0.1",
     "info": {
         "title": "Hackathon FIAP API",
         "description": "API Rest for Hackathon of Master's Degree in Software Architecture\nDeveloped by:\n - Alexandre Miranda - RM357321\n - Diego Ceccon - RM357437\n - JÃ©ssica Rodrigues - RM357218\n - Rodrigo Sartori - RM358002\n - Wilton Souza - RM357991\n",
@@ -263,7 +263,47 @@
             }
         }
     },
+    "x-amazon-apigateway-gateway-responses": {
+        "MISSING_AUTHENTICATION_TOKEN": {
+            "statusCode": 404,
+            "responseTemplates": {
+                "application/json": "{\"message\": \"Route not found.\"}"
+            }
+        },
+        "UNAUTHORIZED": {
+            "statusCode": 401,
+            "responseTemplates": {
+                "application/json": "{\"message\": \"Unauthorized access.\"}"
+            }
+        },
+        "DEFAULT_4XX": {
+            "statusCode": 403,
+            "responseTemplates": {
+                "application/json": "{\"message\": \"Forbidden.\"}"
+            }
+        },
+        "DEFAULT_5XX": {
+            "statusCode": 500,
+            "responseTemplates": {
+                "application/json": "{\"message\": \"Internal server error.\"}"
+            }
+        }
+    },
     "components": {
+        "securitySchemes": {
+            "LambdaAuthorizer": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "x-amazon-apigateway-authtype": "custom",
+                "x-amazon-apigateway-authorizer": {
+                    "type": "REQUEST",
+                    "authorizerUri": "${authorizer_uri}",
+                    "identitySource": "method.request.header.Authorization",
+                    "authorizerCredentials": "${authorizer_credentials}"
+                }
+            }
+        },
         "schemas": {
             "PresignedDownloadResponseDTO": {
                 "properties": {

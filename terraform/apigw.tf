@@ -45,7 +45,7 @@ resource "aws_api_gateway_deployment" "web_api_deployment" {
 resource "aws_api_gateway_stage" "web_api_stage" {
   rest_api_id   = aws_api_gateway_rest_api.web_api.id
   deployment_id = aws_api_gateway_deployment.web_api_deployment.id
-  stage_name    = "techchallenge"
+  stage_name    = "hackathon"
 
   depends_on = [aws_api_gateway_deployment.web_api_deployment]
 }
