@@ -53,6 +53,14 @@
                 "responses": {
                     "201": {
                         "description": "Created Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -63,6 +71,14 @@
                     },
                     "400": {
                         "description": "Bad Request Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -76,6 +92,14 @@
                     },
                     "500": {
                         "description": "Internal Server Error Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -95,6 +119,61 @@
                     "responses": {
                         "default": {
                             "statusCode": "200"
+                        }
+                    }
+                }
+            },
+            "options": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "CORS preflight for /v1/presigned-upload",
+                "operationId": "optionsPresignedUpload",
+                "responses": {
+                    "200": {
+                        "description": "CORS preflight response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "POST, OPTIONS"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Content-Type, user_id, email"
+                            },
+                            "Access-Control-Max-Age": {
+                                "schema": {
+                                    "type": "integer"
+                                },
+                                "example": 86400
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "mock",
+                    "requestTemplates": {
+                        "application/json": "{\"statusCode\": 200}"
+                    },
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                                "method.response.header.Access-Control-Allow-Methods": "'POST, OPTIONS'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, user_id, email'",
+                                "method.response.header.Access-Control-Max-Age": "'86400'"
+                            }
                         }
                     }
                 }
@@ -148,6 +227,14 @@
                 "responses": {
                     "200": {
                         "description": "Ok Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -158,6 +245,14 @@
                     },
                     "404": {
                         "description": "Not Found Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -168,6 +263,14 @@
                     },
                     "500": {
                         "description": "Internal Server Error Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -190,31 +293,94 @@
                         }
                     }
                 }
+            },
+            "options": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "CORS preflight for /v1/files",
+                "operationId": "optionsFiles",
+                "responses": {
+                    "200": {
+                        "description": "CORS preflight response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "GET, OPTIONS"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Content-Type"
+                            },
+                            "Access-Control-Max-Age": {
+                                "schema": {
+                                    "type": "integer"
+                                },
+                                "example": 86400
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "mock",
+                    "requestTemplates": {
+                        "application/json": "{\"statusCode\": 200}"
+                    },
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                                "method.response.header.Access-Control-Allow-Methods": "'GET, OPTIONS'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type'",
+                                "method.response.header.Access-Control-Max-Age": "'86400'"
+                            }
+                        }
+                    }
+                }
             }
         },
         "/v1/files/{id}/presigned-download": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+                    },
+                    "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+                }
+            ],
             "get": {
                 "tags": [
                     "Video"
                 ],
                 "summary": "Get a Presigned Download URL",
                 "operationId": "presignedDownload",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid",
-                            "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                        },
-                        "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Ok Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -225,6 +391,14 @@
                     },
                     "404": {
                         "description": "Not Found Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -235,6 +409,14 @@
                     },
                     "500": {
                         "description": "Internal Server Error Response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -257,6 +439,61 @@
                     "responses": {
                         "default": {
                             "statusCode": "200"
+                        }
+                    }
+                }
+            },
+            "options": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "CORS preflight for /v1/files/{id}/presigned-download",
+                "operationId": "optionsPresignedDownload",
+                "responses": {
+                    "200": {
+                        "description": "CORS preflight response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "*"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "GET, OPTIONS"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Content-Type"
+                            },
+                            "Access-Control-Max-Age": {
+                                "schema": {
+                                    "type": "integer"
+                                },
+                                "example": 86400
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "mock",
+                    "requestTemplates": {
+                        "application/json": "{\"statusCode\": 200}"
+                    },
+                    "responses": {
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                                "method.response.header.Access-Control-Allow-Methods": "'GET, OPTIONS'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type'",
+                                "method.response.header.Access-Control-Max-Age": "'86400'"
+                            }
                         }
                     }
                 }
