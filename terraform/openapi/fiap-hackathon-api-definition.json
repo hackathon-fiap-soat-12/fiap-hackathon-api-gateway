@@ -19,7 +19,7 @@
                 "operationId": "presignedUpload",
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "x-user-id",
                         "in": "header",
                         "required": true,
                         "schema": {
@@ -30,7 +30,7 @@
                         "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
                     },
                     {
-                        "name": "email",
+                        "name": "x-user-email",
                         "in": "header",
                         "required": true,
                         "schema": {
@@ -116,6 +116,10 @@
                     "uri": "http://${lb_dns_name}/video/v1/presigned-upload",
                     "connectionType": "VPC_LINK",
                     "connectionId": "${vpc_link_id}",
+                    "requestParameters": {
+                        "integration.request.header.x-user-id": "method.request.header.x-user-id",
+                        "integration.request.header.x-user-email": "method.request.header.x-user-email"
+                    },
                     "responses": {
                         "default": {
                             "statusCode": "200"
@@ -149,7 +153,7 @@
                                 "schema": {
                                     "type": "string"
                                 },
-                                "example": "Content-Type, user_id, email"
+                                "example": "Content-Type, x-user-id, email"
                             },
                             "Access-Control-Max-Age": {
                                 "schema": {
@@ -171,7 +175,7 @@
                             "responseParameters": {
                                 "method.response.header.Access-Control-Allow-Origin": "'*'",
                                 "method.response.header.Access-Control-Allow-Methods": "'POST, OPTIONS'",
-                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, user_id, email'",
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, x-user-id, email'",
                                 "method.response.header.Access-Control-Max-Age": "'86400'"
                             }
                         }
@@ -188,8 +192,8 @@
                 "operationId": "getFiles",
                 "parameters": [
                     {
-                        "name": "user_id",
-                        "in": "query",
+                        "name": "x-user-id",
+                        "in": "header",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -287,6 +291,9 @@
                     "uri": "http://${lb_dns_name}/video/v1/files",
                     "connectionType": "VPC_LINK",
                     "connectionId": "${vpc_link_id}",
+                    "requestParameters": {
+                        "integration.request.header.x-user-id": "method.request.header.x-user-id"
+                    },
                     "responses": {
                         "default": {
                             "statusCode": "200"
