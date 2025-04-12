@@ -1,671 +1,667 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "Hackathon FIAP API",
-        "description": "API Rest for Hackathon of Master's Degree in Software Architecture\nDeveloped by:\n - Alexandre Miranda - RM357321\n - Diego Ceccon - RM357437\n - JÃ©ssica Rodrigues - RM357218\n - Rodrigo Sartori - RM358002\n - Wilton Souza - RM357991\n",
-        "contact": {
-            "name": "SOAT 8 Group",
-            "email": "soat-group@gmail.com"
-        },
-        "version": "v1"
+      "title": "Hackathon FIAP API",
+      "description": "API Rest for Hackathon of Master's Degree in Software Architecture\nDeveloped by:\n - Alexandre Miranda - RM357321\n - Diego Ceccon - RM357437\n - JÃ©ssica Rodrigues - RM357218\n - Rodrigo Sartori - RM358002\n - Wilton Souza - RM357991\n",
+      "contact": {
+        "name": "SOAT 8 Group",
+        "email": "soat-group@gmail.com"
+      },
+      "version": "v1"
     },
     "paths": {
-        "/v1/presigned-upload": {
-            "post": {
-                "tags": [
-                    "Video"
-                ],
-                "summary": "Get a Presigned Upload URL",
-                "operationId": "presignedUpload",
-                "parameters": [
-                    {
-                        "name": "x-user-id",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid",
-                            "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                        },
-                        "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                    },
-                    {
-                        "name": "x-user-email",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "email@email.com"
-                        },
-                        "example": "email@email.com"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/PresignedUploadRequestDTO"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PresignedUploadResponseDTO"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ErrorsValidateData"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProblemDto"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [],
-                "x-amazon-apigateway-integration": {
-                    "type": "http_proxy",
-                    "httpMethod": "POST",
-                    "uri": "http://${lb_dns_name}/video/v1/presigned-upload",
-                    "connectionType": "VPC_LINK",
-                    "connectionId": "${vpc_link_id}",
-                    "requestParameters": {
-                        "integration.request.header.x-user-id": "method.request.header.x-user-id",
-                        "integration.request.header.x-user-email": "method.request.header.x-user-email"
-                    },
-                    "responses": {
-                        "default": {
-                            "statusCode": "200"
-                        }
-                    }
-                }
+      "/v1/presigned-upload": {
+        "post": {
+          "tags": ["Video"],
+          "summary": "Get a Presigned Upload URL",
+          "operationId": "presignedUpload",
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "in": "header",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid",
+                "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+              },
+              "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
             },
-            "options": {
-                "tags": [
-                    "Video"
-                ],
-                "summary": "CORS preflight for /v1/presigned-upload",
-                "operationId": "optionsPresignedUpload",
-                "responses": {
-                    "200": {
-                        "description": "CORS preflight response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            },
-                            "Access-Control-Allow-Methods": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "POST, OPTIONS"
-                            },
-                            "Access-Control-Allow-Headers": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "Content-Type, x-user-id, email"
-                            },
-                            "Access-Control-Max-Age": {
-                                "schema": {
-                                    "type": "integer"
-                                },
-                                "example": 86400
-                            }
-                        }
-                    }
-                },
-                "x-amazon-apigateway-integration": {
-                    "type": "mock",
-                    "requestTemplates": {
-                        "application/json": "{\"statusCode\": 200}"
-                    },
-                    "responses": {
-                        "default": {
-                            "statusCode": "200",
-                            "responseParameters": {
-                                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                                "method.response.header.Access-Control-Allow-Methods": "'POST, OPTIONS'",
-                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, x-user-id, email'",
-                                "method.response.header.Access-Control-Max-Age": "'86400'"
-                            }
-                        }
-                    }
-                }
+            {
+              "name": "x-user-email",
+              "in": "header",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "email@email.com"
+              },
+              "example": "email@email.com"
             }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresignedUploadRequestDTO"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Created Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PresignedUploadResponseDTO"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ErrorsValidateData"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDto"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "LambdaAuthorizer": []
+            }
+          ],
+          "x-amazon-apigateway-integration": {
+            "type": "http_proxy",
+            "httpMethod": "POST",
+            "uri": "http://${lb_dns_name}/video/v1/presigned-upload",
+            "connectionType": "VPC_LINK",
+            "connectionId": "${vpc_link_id}",
+            "requestParameters": {
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            }
+          }
         },
-        "/v1/files": {
-            "get": {
-                "tags": [
-                    "Video"
-                ],
-                "summary": "Find a List of files by user id",
-                "operationId": "getFiles",
-                "parameters": [
-                    {
-                        "name": "x-user-id",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid",
-                            "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                        },
-                        "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                    },
-                    {
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "example": 3
-                        },
-                        "example": 3
-                    },
-                    {
-                        "name": "exclusiveStartKey",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "{\"createdAt\":\"2025-03-31T12:28:09.775653700\",\"id\":\"031193eb-6464-4d18-91f7-d0be91714561\",\"userId\":\"4f2da442-81d6-47d9-bfbb-3b525c6f0606\"}"
-                        },
-                        "example": {
-                            "createdAt": "2025-03-31T12:28:09.775653700",
-                            "id": "031193eb-6464-4d18-91f7-d0be91714561",
-                            "userId": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ok Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ListFilesResponseDTO"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProblemDto"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProblemDto"
-                                }
-                            }
-                        }
-                    }
+        "options": {
+          "tags": ["Video"],
+          "summary": "CORS preflight for /v1/presigned-upload",
+          "operationId": "optionsPresignedUpload",
+          "responses": {
+            "200": {
+              "description": "CORS preflight response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
                 },
-                "security": [],
-                "x-amazon-apigateway-integration": {
-                    "type": "http_proxy",
-                    "httpMethod": "GET",
-                    "uri": "http://${lb_dns_name}/video/v1/files",
-                    "connectionType": "VPC_LINK",
-                    "connectionId": "${vpc_link_id}",
-                    "requestParameters": {
-                        "integration.request.header.x-user-id": "method.request.header.x-user-id"
-                    },
-                    "responses": {
-                        "default": {
-                            "statusCode": "200"
-                        }
-                    }
-                }
-            },
-            "options": {
-                "tags": [
-                    "Video"
-                ],
-                "summary": "CORS preflight for /v1/files",
-                "operationId": "optionsFiles",
-                "responses": {
-                    "200": {
-                        "description": "CORS preflight response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            },
-                            "Access-Control-Allow-Methods": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "GET, OPTIONS"
-                            },
-                            "Access-Control-Allow-Headers": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "Content-Type"
-                            },
-                            "Access-Control-Max-Age": {
-                                "schema": {
-                                    "type": "integer"
-                                },
-                                "example": 86400
-                            }
-                        }
-                    }
+                "Access-Control-Allow-Methods": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "POST, OPTIONS"
                 },
-                "x-amazon-apigateway-integration": {
-                    "type": "mock",
-                    "requestTemplates": {
-                        "application/json": "{\"statusCode\": 200}"
-                    },
-                    "responses": {
-                        "default": {
-                            "statusCode": "200",
-                            "responseParameters": {
-                                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                                "method.response.header.Access-Control-Allow-Methods": "'GET, OPTIONS'",
-                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type'",
-                                "method.response.header.Access-Control-Max-Age": "'86400'"
-                            }
-                        }
-                    }
+                "Access-Control-Allow-Headers": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "Content-Type, x-user-id, email"
+                },
+                "Access-Control-Max-Age": {
+                  "schema": {
+                    "type": "integer"
+                  },
+                  "example": 86400
                 }
+              }
             }
-        },
-        "/v1/files/{id}/presigned-download": {
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                    },
-                    "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
-                }
-            ],
-            "get": {
-                "tags": [
-                    "Video"
-                ],
-                "summary": "Get a Presigned Download URL",
-                "operationId": "presignedDownload",
-                "responses": {
-                    "200": {
-                        "description": "Ok Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PresignedDownloadResponseDTO"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProblemDto"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error Response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ProblemDto"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [],
-                "x-amazon-apigateway-integration": {
-                    "type": "http_proxy",
-                    "httpMethod": "GET",
-                    "uri": "http://${lb_dns_name}/video/v1/files/{id}/presigned-download",
-                    "connectionType": "VPC_LINK",
-                    "connectionId": "${vpc_link_id}",
-                    "requestParameters": {
-                        "integration.request.path.id": "method.request.path.id"
-                    },
-                    "responses": {
-                        "default": {
-                            "statusCode": "200"
-                        }
-                    }
-                }
+          },
+          "x-amazon-apigateway-integration": {
+            "type": "http_proxy",
+            "httpMethod": "OPTIONS",
+            "uri": "http://${lb_dns_name}/video/v1/presigned-upload",
+            "connectionType": "VPC_LINK",
+            "connectionId": "${vpc_link_id}",
+            "requestParameters": {
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
             },
-            "options": {
-                "tags": [
-                    "Video"
-                ],
-                "summary": "CORS preflight for /v1/files/{id}/presigned-download",
-                "operationId": "optionsPresignedDownload",
-                "responses": {
-                    "200": {
-                        "description": "CORS preflight response",
-                        "headers": {
-                            "Access-Control-Allow-Origin": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "*"
-                            },
-                            "Access-Control-Allow-Methods": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "GET, OPTIONS"
-                            },
-                            "Access-Control-Allow-Headers": {
-                                "schema": {
-                                    "type": "string"
-                                },
-                                "example": "Content-Type"
-                            },
-                            "Access-Control-Max-Age": {
-                                "schema": {
-                                    "type": "integer"
-                                },
-                                "example": 86400
-                            }
-                        }
-                    }
-                },
-                "x-amazon-apigateway-integration": {
-                    "type": "mock",
-                    "requestTemplates": {
-                        "application/json": "{\"statusCode\": 200}"
-                    },
-                    "responses": {
-                        "default": {
-                            "statusCode": "200",
-                            "responseParameters": {
-                                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                                "method.response.header.Access-Control-Allow-Methods": "'GET, OPTIONS'",
-                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type'",
-                                "method.response.header.Access-Control-Max-Age": "'86400'"
-                            }
-                        }
-                    }
-                }
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
             }
+          }
         }
+      },
+      "/v1/files": {
+        "get": {
+          "tags": ["Video"],
+          "summary": "Find a List of files by user id",
+          "operationId": "getFiles",
+          "parameters": [
+            {
+              "name": "x-user-id",
+              "in": "header",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid",
+                "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+              },
+              "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+            },
+            {
+              "name": "pageSize",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "example": 3
+              },
+              "example": 3
+            },
+            {
+              "name": "exclusiveStartKey",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "example": "{\"createdAt\":\"2025-03-31T12:28:09.775653700\",\"id\":\"031193eb-6464-4d18-91f7-d0be91714561\",\"userId\":\"4f2da442-81d6-47d9-bfbb-3b525c6f0606\"}"
+              },
+              "example": {
+                "createdAt": "2025-03-31T12:28:09.775653700",
+                "id": "031193eb-6464-4d18-91f7-d0be91714561",
+                "userId": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Ok Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ListFilesResponseDTO"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDto"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDto"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "LambdaAuthorizer": []
+            }
+          ],
+          "x-amazon-apigateway-integration": {
+            "type": "http_proxy",
+            "httpMethod": "GET",
+            "uri": "http://${lb_dns_name}/video/v1/files",
+            "connectionType": "VPC_LINK",
+            "connectionId": "${vpc_link_id}",
+            "requestParameters": {
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            }
+          }
+        },
+        "options": {
+          "tags": ["Video"],
+          "summary": "CORS preflight for /v1/files",
+          "operationId": "optionsFiles",
+          "responses": {
+            "200": {
+              "description": "CORS preflight response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                },
+                "Access-Control-Allow-Methods": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "GET, OPTIONS"
+                },
+                "Access-Control-Allow-Headers": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "Content-Type"
+                },
+                "Access-Control-Max-Age": {
+                  "schema": {
+                    "type": "integer"
+                  },
+                  "example": 86400
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration": {
+            "type": "http_proxy",
+            "httpMethod": "OPTIONS",
+            "uri": "http://${lb_dns_name}/video/v1/files",
+            "connectionType": "VPC_LINK",
+            "connectionId": "${vpc_link_id}",
+            "requestParameters": {
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            }
+          }
+        }
+      },
+      "/v1/files/{id}/presigned-download": {
+        "get": {
+          "tags": ["Video"],
+          "summary": "Get a Presigned Download URL",
+          "operationId": "presignedDownload",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "format": "uuid",
+                "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+              },
+              "example": "4f2da442-81d6-47d9-bfbb-3b525c6f0606"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Ok Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PresignedDownloadResponseDTO"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDto"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error Response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDto"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "LambdaAuthorizer": []
+            }
+          ],
+          "x-amazon-apigateway-integration": {
+            "type": "http_proxy",
+            "httpMethod": "GET",
+            "uri": "http://${lb_dns_name}/video/v1/files/{id}/presigned-download",
+            "connectionType": "VPC_LINK",
+            "connectionId": "${vpc_link_id}",
+            "requestParameters": {
+              "integration.request.path.id": "method.request.path.id",
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            }
+          }
+        },
+        "options": {
+          "tags": ["Video"],
+          "summary": "CORS preflight for /v1/files/{id}/presigned-download",
+          "operationId": "optionsPresignedDownload",
+          "responses": {
+            "200": {
+              "description": "CORS preflight response",
+              "headers": {
+                "Access-Control-Allow-Origin": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "*"
+                },
+                "Access-Control-Allow-Methods": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "GET, OPTIONS"
+                },
+                "Access-Control-Allow-Headers": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "Content-Type"
+                },
+                "Access-Control-Max-Age": {
+                  "schema": {
+                    "type": "integer"
+                  },
+                  "example": 86400
+                }
+              }
+            }
+          },
+          "x-amazon-apigateway-integration": {
+            "type": "http_proxy",
+            "httpMethod": "OPTIONS",
+            "uri": "http://${lb_dns_name}/video/v1/files/{id}/presigned-download",
+            "connectionType": "VPC_LINK",
+            "connectionId": "${vpc_link_id}",
+            "requestParameters": {
+              "integration.request.path.id": "method.request.path.id",
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-mail": "context.authorizer.x-user-mail"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200"
+              }
+            }
+          }
+        }
+      }
     },
     "x-amazon-apigateway-gateway-responses": {
-        "MISSING_AUTHENTICATION_TOKEN": {
-            "statusCode": 404,
-            "responseTemplates": {
-                "application/json": "{\"message\": \"Route not found.\"}"
-            }
-        },
-        "UNAUTHORIZED": {
-            "statusCode": 401,
-            "responseTemplates": {
-                "application/json": "{\"message\": \"Unauthorized access.\"}"
-            }
-        },
-        "DEFAULT_4XX": {
-            "statusCode": 403,
-            "responseTemplates": {
-                "application/json": "{\"message\": \"Forbidden.\"}"
-            }
-        },
-        "DEFAULT_5XX": {
-            "statusCode": 500,
-            "responseTemplates": {
-                "application/json": "{\"message\": \"Internal server error.\"}"
-            }
+      "MISSING_AUTHENTICATION_TOKEN": {
+        "statusCode": 404,
+        "responseTemplates": {
+          "application/json": "{\"message\": \"Route not found.\"}"
         }
+      },
+      "UNAUTHORIZED": {
+        "statusCode": 401,
+        "responseTemplates": {
+          "application/json": "{\"message\": \"Unauthorized access.\"}"
+        }
+      },
+      "DEFAULT_4XX": {
+        "statusCode": 403,
+        "responseTemplates": {
+          "application/json": "{\"message\": \"Forbidden.\"}"
+        }
+      },
+      "DEFAULT_5XX": {
+        "statusCode": 500,
+        "responseTemplates": {
+          "application/json": "{\"message\": \"Internal server error.\"}"
+        }
+      }
     },
     "components": {
-        "securitySchemes": {
-            "LambdaAuthorizer": {
-                "type": "apiKey",
-                "name": "Authorization",
-                "in": "header",
-                "x-amazon-apigateway-authtype": "custom",
-                "x-amazon-apigateway-authorizer": {
-                    "type": "REQUEST",
-                    "authorizerUri": "${authorizer_uri}",
-                    "identitySource": "method.request.header.Authorization",
-                    "authorizerCredentials": "${authorizer_credentials}"
-                }
-            }
-        },
-        "schemas": {
-            "PresignedDownloadResponseDTO": {
-                "properties": {
-                    "url": {
-                        "type": "string",
-                        "example": "https://videofiles.localhost.localstack.cloud:4566/videofiles/videos/marvel.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250331T194746Z&X-Amz-SignedHeaders=host%3Bx-amz-meta-content-type&X-Amz-Credential=fakeAccessKey%2F20250331%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=300&X-Amz-Signature=ce6970fca66633079244e06182f17563c0317c9af3cde5edea434365223391ef"
-                    },
-                    "method": {
-                        "type": "string",
-                        "example": "GET"
-                    },
-                    "expiresIn": {
-                        "type": "integer",
-                        "format": "int32",
-                        "example": 299
-                    }
-                }
-            },
-            "PresignedUploadResponseDTO": {
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "fa90993a-823c-4848-ae75-b01690867d4b"
-                    },
-                    "url": {
-                        "type": "string",
-                        "example": "https://videofiles.localhost.localstack.cloud:4566/videofiles/videos/marvel.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250331T194746Z&X-Amz-SignedHeaders=host%3Bx-amz-meta-content-type&X-Amz-Credential=fakeAccessKey%2F20250331%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=300&X-Amz-Signature=ce6970fca66633079244e06182f17563c0317c9af3cde5edea434365223391ef"
-                    },
-                    "method": {
-                        "type": "string",
-                        "example": "PUT"
-                    },
-                    "expiresIn": {
-                        "type": "integer",
-                        "format": "int32",
-                        "example": 299
-                    }
-                }
-            },
-            "ListFilesResponseDTO": {
-                "properties": {
-                    "files": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/FileResponseDTO"
-                        }
-                    },
-                    "lastEvaluatedKey": {
-                        "type": "string",
-                        "example": "{\"createdAt\":\"2025-03-31T12:28:09.775653700\",\"id\":\"031193eb-6464-4d18-91f7-d0be91714561\",\"userId\":\"4f2da442-81d6-47d9-bfbb-3b525c6f0606\"}"
-                    }
-                }
-            },
-            "FileResponseDTO": {
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "format": "uuid",
-                        "example": "031193eb-6464-4d18-91f7-d0be91714561"
-                    },
-                    "videoName": {
-                        "type": "string",
-                        "example": "video.mp4"
-                    },
-                    "processingStatus": {
-                        "type": "string",
-                        "enum": [
-                            "NEW",
-                            "RECEIVED",
-                            "PROCESSING",
-                            "PROCESSED",
-                            "FAILED"
-                        ],
-                        "example": "NEW"
-                    }
-                }
-            },
-            "ProblemDto": {
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "Error Message"
-                    },
-                    "dateTime": {
-                        "type": "string",
-                        "example": "2025-03-31T16:46:34.792653300"
-                    }
-                }
-            },
-            "PresignedUploadRequestDTO": {
-                "type": "object",
-                "properties": {
-                    "fileName": {
-                        "type": "string",
-                        "example": "video.mp4",
-                        "minLength": 1
-                    },
-                    "fileType": {
-                        "type": "string",
-                        "example": "video/mp4",
-                        "minLength": 1
-                    }
-                }
-            },
-            "ErrorsValidateData": {
-                "type": "object",
-                "properties": {
-                    "field": {
-                        "type": "string",
-                        "example": "fieldName"
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": "must not be blank"
-                    }
-                }
-            }
+      "securitySchemes": {
+        "LambdaAuthorizer": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header",
+          "x-amazon-apigateway-authtype": "custom",
+          "x-amazon-apigateway-authorizer": {
+            "type": "REQUEST",
+            "authorizerUri": "${authorizer_uri}",
+            "identitySource": "method.request.header.Authorization",
+            "authorizerCredentials": "${authorizer_credentials}"
+          }
         }
+      },
+      "schemas": {
+        "PresignedDownloadResponseDTO": {
+          "properties": {
+            "url": {
+              "type": "string",
+              "example": "https://videofiles.localhost.localstack.cloud:4566/videofiles/videos/marvel.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250331T194746Z&X-Amz-SignedHeaders=host%3Bx-amz-meta-content-type&X-Amz-Credential=fakeAccessKey%2F20250331%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=300&X-Amz-Signature=ce6970fca66633079244e06182f17563c0317c9af3cde5edea434365223391ef"
+            },
+            "method": {
+              "type": "string",
+              "example": "GET"
+            },
+            "expiresIn": {
+              "type": "integer",
+              "format": "int32",
+              "example": 299
+            }
+          }
+        },
+        "PresignedUploadResponseDTO": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "example": "fa90993a-823c-4848-ae75-b01690867d4b"
+            },
+            "url": {
+              "type": "string",
+              "example": "https://videofiles.localhost.localstack.cloud:4566/videofiles/videos/marvel.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250331T194746Z&X-Amz-SignedHeaders=host%3Bx-amz-meta-content-type&X-Amz-Credential=fakeAccessKey%2F20250331%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=300&X-Amz-Signature=ce6970fca66633079244e06182f17563c0317c9af3cde5edea434365223391ef"
+            },
+            "method": {
+              "type": "string",
+              "example": "PUT"
+            },
+            "expiresIn": {
+              "type": "integer",
+              "format": "int32",
+              "example": 299
+            }
+          }
+        },
+        "ListFilesResponseDTO": {
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FileResponseDTO"
+              }
+            },
+            "lastEvaluatedKey": {
+              "type": "string",
+              "example": "{\"createdAt\":\"2025-03-31T12:28:09.775653700\",\"id\":\"031193eb-6464-4d18-91f7-d0be91714561\",\"userId\":\"4f2da442-81d6-47d9-bfbb-3b525c6f0606\"}"
+            }
+          }
+        },
+        "FileResponseDTO": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "example": "031193eb-6464-4d18-91f7-d0be91714561"
+            },
+            "videoName": {
+              "type": "string",
+              "example": "video.mp4"
+            },
+            "processingStatus": {
+              "type": "string",
+              "enum": ["NEW", "RECEIVED", "PROCESSING", "PROCESSED", "FAILED"],
+              "example": "NEW"
+            }
+          }
+        },
+        "ProblemDto": {
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Error Message"
+            },
+            "dateTime": {
+              "type": "string",
+              "example": "2025-03-31T16:46:34.792653300"
+            }
+          }
+        },
+        "PresignedUploadRequestDTO": {
+          "type": "object",
+          "properties": {
+            "fileName": {
+              "type": "string",
+              "example": "video.mp4",
+              "minLength": 1
+            },
+            "fileType": {
+              "type": "string",
+              "example": "video/mp4",
+              "minLength": 1
+            }
+          }
+        },
+        "ErrorsValidateData": {
+          "type": "object",
+          "properties": {
+            "field": {
+              "type": "string",
+              "example": "fieldName"
+            },
+            "message": {
+              "type": "string",
+              "example": "must not be blank"
+            }
+          }
+        }
+      }
     }
-}
+  }
+  
