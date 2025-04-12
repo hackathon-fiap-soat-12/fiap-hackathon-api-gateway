@@ -119,8 +119,8 @@
             "connectionType": "VPC_LINK",
             "connectionId": "${vpc_link_id}",
             "requestParameters": {
-              "integration.request.header.x-user-id": "method.request.header.x-user-id",
-              "integration.request.header.x-user-email": "method.request.header.x-user-email"
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
             },
             "responses": {
               "default": {
@@ -293,7 +293,8 @@
             "connectionType": "VPC_LINK",
             "connectionId": "${vpc_link_id}",
             "requestParameters": {
-              "integration.request.header.x-user-id": "context.authorizer.x-user-id"
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
             },
             "responses": {
               "default": {
@@ -441,7 +442,9 @@
             "connectionType": "VPC_LINK",
             "connectionId": "${vpc_link_id}",
             "requestParameters": {
-              "integration.request.path.id": "method.request.path.id"
+              "integration.request.path.id": "method.request.path.id",
+              "integration.request.header.x-user-id": "context.authorizer.x-user-id",
+              "integration.request.header.x-user-email": "context.authorizer.x-user-email"
             },
             "responses": {
               "default": {
