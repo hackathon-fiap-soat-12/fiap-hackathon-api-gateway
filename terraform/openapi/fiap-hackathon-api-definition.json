@@ -545,7 +545,8 @@
             "type": "REQUEST",
             "authorizerUri": "${authorizer_uri}",
             "identitySource": "method.request.header.Authorization",
-            "authorizerCredentials": "${authorizer_credentials}"
+            "authorizerCredentials": "${authorizer_credentials}",
+            "authorizerResultTtlInSeconds": 0
           }
         }
       },
@@ -664,4 +665,3 @@
       }
     }
   }
-  
